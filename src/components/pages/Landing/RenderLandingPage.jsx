@@ -40,6 +40,9 @@ function RenderLandingPage(props) {
             className="graph-img"
           />
           <p className="graph-descriptions">Search Grant Rates By Office</p>
+          {/* The idea here was to have the image and the description which is represented as a p tag in the same div with the classname="graphs-container".
+              Reason being, this would allow for me to easily format the div in column fashion using display:flex; && flex-direction: column;
+              Since these graph-container divs are all nested within the div with classname="graphs-section", all three column divs are then put into a row of columns */}
         </div>
 
         <div className="graph-container">
@@ -102,7 +105,8 @@ function RenderLandingPage(props) {
       <div>
         {/* Bottom Section: Add code here for the graphs section for your first ticket */}
 
-        {/* Idea before implementing was to have 3 divs with the same classname for easy styling. Inside of the divs were a h1 and a p tag that were easily  */}
+        {/* Idea before implementing was to have 3 divs with the same classname for reusable code and easy styling. Similar to the implementation above,
+            There is a h1 which represents the percentage, while the p tag represents the description.*/}
         <div className="bottom-section">
           <h1>Systemic Disparity Insights</h1>
 
