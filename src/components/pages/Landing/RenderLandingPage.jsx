@@ -68,8 +68,18 @@ function RenderLandingPage(props) {
           type="default"
           style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
           onClick={() => history.push('/graphs')}
+          className="data-buttons"
         >
           View the Data
+        </Button>
+
+        <Button
+          type="default"
+          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          onClick={() => history.push('/graphs')}
+          className="data-buttons"
+        >
+          Download the Data
         </Button>
       </div>
 
@@ -123,6 +133,15 @@ function RenderLandingPage(props) {
               </p>
             </div>
           </div>
+        </div>
+        <div className="read-more-button-container">
+          <button
+            type="default"
+            style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            className="readmore-button"
+          >
+            Read More
+          </button>
         </div>
 
         <p onClick={() => scrollToTop()} className="back-to-top">
