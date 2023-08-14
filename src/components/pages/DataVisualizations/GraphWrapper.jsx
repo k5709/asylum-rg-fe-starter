@@ -74,8 +74,9 @@ function GraphWrapper(props) {
     */
 
     if (office === 'all' || !office) {
+      const apiUrl = 'https://hrf-asylum-be-b.herokuapp.com/cases';
       axios
-        .get(process.env.REACT_APP_API_URI, {
+        .get(apiUrl, {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
