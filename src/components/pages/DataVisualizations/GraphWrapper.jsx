@@ -51,62 +51,46 @@ function GraphWrapper(props) {
     }
   }
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
-    /*
-          _                                                                             _
-        |                                                                                 |
-        |   Example request for once the `/summary` endpoint is up and running:           |
-        |                                                                                 |
-        |     `${url}/summary?to=2022&from=2015&office=ZLA`                               |
-        |                                                                                 |
-        |     so in axios we will say:                                                    |
-        |                                                                                 |     
-        |       axios.get(`${url}/summary`, {                                             |
-        |         params: {                                                               |
-        |           from: <year_start>,                                                   |
-        |           to: <year_end>,                                                       |
-        |           office: <office>,       [ <-- this one is optional! when    ]         |
-        |         },                        [ querying by `all offices` there's ]         |
-        |       })                          [ no `office` param in the query    ]         |
-        |                                                                                 |
-          _                                                                             _
-                                   -- Mack 
-    
-    */
+    const fiscalEndpoint =
+      'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary';
+    const citizenshipEndpoint =
+      'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary';
 
-    if (office === 'all' || !office) {
-      const apiUrl = 'https://hrf-asylum-be-b.herokuapp.com/cases';
-      axios
-        .get(apiUrl, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+    let params;
+
+    switch (office) {
+      case 'all':
+        params = {
           params: {
             from: years[0],
             to: years[1],
           },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    } else {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+        };
+        break;
+      default:
+        params = {
           params: {
             from: years[0],
             to: years[1],
             office: office,
           },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
+        };
+        break;
     }
+
+    const fiscalPromise = axios.get(fiscalEndpoint, params);
+    const citizenshipPromise = axios.get(citizenshipEndpoint, params);
+
+    Promise.all([fiscalPromise, citizenshipPromise])
+      .then(([fiscalCall, citizenshipCall]) => {
+        fiscalCall.data['citizenshipResults'] = citizenshipCall.data;
+        stateSettingCallback(view, office, [fiscalCall.data]);
+      })
+      .catch(error => {
+        console.log('Cannot fetch data', error);
+      });
   }
+
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
