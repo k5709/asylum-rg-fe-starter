@@ -10,7 +10,6 @@ import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
 import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
-import test_data from '../../../data/test_data.json';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
@@ -50,44 +49,71 @@ function GraphWrapper(props) {
         break;
     }
   }
+  // function updateStateWithNewData(years, view, office, stateSettingCallback) {
+  //   const fiscalEndpoint =
+  //     'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary';
+  //   const citizenshipEndpoint =
+  //     'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary';
+
+  //   let params;
+
+  //   switch (office) {
+  //     case 'all':
+  //       params = {
+  //         params: {
+  //           from: years[0],
+  //           to: years[1],
+  //         },
+  //       };
+  //       break;
+  //     default:
+  //       params = {
+  //         params: {
+  //           from: years[0],
+  //           to: years[1],
+  //           office: office,
+  //         },
+  //       };
+  //       break;
+  //   }
+
+  //   const fiscalPromise = axios.get(fiscalEndpoint, params);
+  //   const citizenshipPromise = axios.get(citizenshipEndpoint, params);
+
+  //   Promise.all([fiscalPromise, citizenshipPromise])
+  //     .then(([fiscalCall, citizenshipCall]) => {
+  //       fiscalCall.data['citizenshipResults'] = citizenshipCall.data;
+  //       stateSettingCallback(view, office, [fiscalCall.data]);
+  //     })
+  //     .catch(error => {
+  //       console.log('Cannot fetch data', error);
+  //     });
+  // }
+
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
     const fiscalEndpoint =
-      'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary';
+      'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'; //instantiating the url to a variable for easier reading
     const citizenshipEndpoint =
-      'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary';
+      'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary'; //instantiating the citizenship url to a variable for easier reading
 
-    let params;
+    const params = {
+      //takes cares of setting params for both `office` and `all`
+      from: years[0],
+      to: years[1],
+      office: office || 'all',
+    };
 
-    switch (office) {
-      case 'all':
-        params = {
-          params: {
-            from: years[0],
-            to: years[1],
-          },
-        };
-        break;
-      default:
-        params = {
-          params: {
-            from: years[0],
-            to: years[1],
-            office: office,
-          },
-        };
-        break;
-    }
-
-    const fiscalPromise = axios.get(fiscalEndpoint, params);
-    const citizenshipPromise = axios.get(citizenshipEndpoint, params);
+    const fiscalPromise = axios.get(fiscalEndpoint, { params }); //calling the fiscalEndpoint calling the fiscalEndpoint using the destructred params
+    const citizenshipPromise = axios.get(citizenshipEndpoint, { params }); //calling the citizenshipEndpoint using the destructred params
 
     Promise.all([fiscalPromise, citizenshipPromise])
       .then(([fiscalCall, citizenshipCall]) => {
-        fiscalCall.data['citizenshipResults'] = citizenshipCall.data;
-        stateSettingCallback(view, office, [fiscalCall.data]);
+        //the resolved values of the promises `fiscalCall` and `citizenshipCall`
+        fiscalCall.data['citizenshipResults'] = citizenshipCall.data; //setting the citizenshipCall data (response data from the API call)
+        stateSettingCallback(view, office, [fiscalCall.data]); //after combining the data is called to update the state with the data
       })
       .catch(error => {
-        console.log('Cannot fetch data', error);
+        console.log('Cannot fetch data', error); //catching and console.logging an `Cannot fetch data` error and error code
       });
   }
 
