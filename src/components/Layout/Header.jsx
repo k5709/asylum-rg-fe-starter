@@ -3,6 +3,11 @@ import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../styles/Images/WhiteLogo.png';
 import { colors } from '../../styles/data_vis_colors';
+//     //authentication portion//
+// import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+// import LoginButton from '../../auth/login-button';
+// import LogoutButton from '../../auth/logout-button';
+// import NavigationMenu from '../NavigationMenu';
 
 const { primary_accent_color } = colors;
 
@@ -22,6 +27,7 @@ function HeaderContent() {
         </a>
       </div>
       <div>
+        <div></div>
         <Link to="/" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Home
         </Link>
