@@ -10,7 +10,7 @@ function Profile() {
 
   //return a message if the use is not authenicated
   if (!isAutheticated) {
-    return <p>Please log in to view your profile</p>;
+    return <h1>Please log in to view your profile</h1>;
   }
 
   //Render user information if the user is authenticated

@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import Logo from '../../styles/Images/WhiteLogo.png';
 import { colors } from '../../styles/data_vis_colors';
 //     //authentication portion//
-// import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
-// import LoginButton from '../../auth/login-button';
-// import LogoutButton from '../../auth/logout-button';
-// import NavigationMenu from '../NavigationMenu';
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import NavigationMenu from '../NavigationMenu';
+import Profile from '../Profile';
 
 const { primary_accent_color } = colors;
 
@@ -26,13 +25,24 @@ function HeaderContent() {
           <Image width={100} src={Logo} preview={false} alt="HRF logo white" />
         </a>
       </div>
-      <div>
-        <div></div>
-        <Link to="/" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
+
+      <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <Link component={NavigationMenu} style={{ color: '#E2F0F7' }} />
+        <Link
+          to="/"
+          style={{
+            color: '#E2F0F7',
+            paddingRight: '75px',
+            paddingLeft: '75px',
+          }}
+        >
           Home
         </Link>
-        <Link to="/graphs" style={{ color: '#E2F0F7' }}>
+        <Link to="/graphs" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Graphs
+        </Link>
+        <Link to="/profile" style={{ color: '#E2F0F7' }}>
+          Profile
         </Link>
       </div>
     </div>

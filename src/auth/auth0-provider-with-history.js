@@ -8,15 +8,18 @@ const Auth0ProviderWithHistory = ({ children }) => {
   const history = useHistory();
 
   const onRedirectCallback = appState => {
-    //redirects to the page login page
+    //redirects to the login page
     history.push(appState?.returnTo || window.location.pathname);
+    console.log('navmenurunning');
   };
 
   return (
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.origin}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
       onRedirectCallback={onRedirectCallback}
     >
       {children}
