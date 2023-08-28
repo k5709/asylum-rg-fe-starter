@@ -10,7 +10,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 const { primary_accent_color } = colors;
 
 function HeaderContent() {
+  // destructred isAuthenticated to use in a ternary operation to conditionally render the profile tab
   const { isAuthenticated } = useAuth0();
+  //
   return (
     <div
       style={{
@@ -27,11 +29,13 @@ function HeaderContent() {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        {/* Conditionally changing the login button to display log out while user is authenticated */}
         <Link
           to="/"
           component={AuthenticationButton}
           style={{ color: '#E2F0F7' }}
         />
+
         <Link
           to="/"
           style={{
@@ -46,14 +50,12 @@ function HeaderContent() {
           Graphs
         </Link>
 
+        {/* conditionally rendering the profile tab if authenticated */}
         {isAuthenticated ? (
           <Link to="/profile" style={{ color: '#E2F0F7' }}>
             Profile
           </Link>
         ) : undefined}
-        {/* // <Link to="/profile" style={{ color: '#E2F0F7' }}>
-        //   Profile
-        // </Link> */}
       </div>
     </div>
   );

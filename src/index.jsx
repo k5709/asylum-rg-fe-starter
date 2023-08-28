@@ -34,9 +34,11 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <React.StrictMode>
+        {/* wrapped the <App /> with the Auth0ProviderWithHistory */}
         <Auth0ProviderWithHistory>
           <App />
         </Auth0ProviderWithHistory>
+        {/*  */}
       </React.StrictMode>
     </Provider>
   </Router>,
