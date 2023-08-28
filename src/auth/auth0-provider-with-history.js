@@ -10,7 +10,6 @@ const Auth0ProviderWithHistory = ({ children }) => {
   const onRedirectCallback = appState => {
     //redirects to the login page
     history.push(appState?.returnTo || window.location.pathname);
-    console.log('navmenurunning');
   };
 
   return (
