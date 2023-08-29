@@ -10,7 +10,7 @@ function Profile() {
 
   //Render user information if the user is authenticated
   return (
-    <div>
+    <div style={{ paddingLeft: '2%', margin: '0.5%' }}>
       <h1>Profile</h1>
       <img src={user.picture} alt={user.name} style={{ width: '150px' }} />
       <h2>Name: {user.name}</h2>
